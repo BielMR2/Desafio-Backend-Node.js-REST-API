@@ -18,6 +18,7 @@ class UserRepository {
     
     async find(date, type){
         const user = await knex("users").where({ [type]: date }).first()
+
         if(!user){
             return null
         }

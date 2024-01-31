@@ -18,7 +18,7 @@ class UsersController {
             await userCreateService.execute({ name, email, password, confirmPassword, role })
             return res.status(201).json({ message: 'Usuário criado com sucesso' })
         } catch (error) {
-            return res.status(error.statusCode).json({ error })
+            return res.status(400).json({ error })
         }
     }
 
@@ -30,7 +30,7 @@ class UsersController {
             const users = await userIndexService.execute()
             return res.status(200).json({ users })
         } catch (error) {
-            return res.status(error.statusCode).json({ error })
+            return res.status(400).json({ error })
         }
     }
 
@@ -59,7 +59,7 @@ class UsersController {
             const userUpdate = await userUpdateService.execute({ id, name, email, oldpassword, newPassword, confirmPassword, role })
             return res.status(200).json(userUpdate)
         } catch (error) {
-            return res.json({ error })
+            return res.status(400).json({ error })
         }
     }
 
@@ -73,7 +73,7 @@ class UsersController {
             const user = await userDeleteService.execute({ id })
             return res.status(200).json({ user })
         } catch (error) {
-            return res.status(error.statusCode).json({ error })
+            return res.status(400).json({ error })
         }
     }
 }
