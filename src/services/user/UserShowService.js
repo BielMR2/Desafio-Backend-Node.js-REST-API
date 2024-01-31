@@ -7,7 +7,7 @@ class UserShowService {
 
     async execute({ id, name, email, role }){
         const users = await this.userRepository.show({ id, name, email, role });
-        if(users.length === 0){
+        if(!users){
             return "Nenhum usuário encontrado!"
         }
         return users

@@ -32,12 +32,16 @@ class UserRepository {
     async show({ id, email, name, role }) {
         const users = await knex("users")
             .where(builder => {
-                if (id) builder.where({ id });
+                if (id) builder.whereLike({ id });
                 if (email) builder.whereLike("email", `%${email}%`);
                 if (name) builder.whereLike("name", `%${name}%`);
                 if (role) builder.whereLike("role", `%${role}%`);
             })
             .select();
+
+        if(users.length === 0){
+            return null
+        }
     
         return users;
     }

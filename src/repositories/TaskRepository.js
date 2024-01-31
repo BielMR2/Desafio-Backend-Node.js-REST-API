@@ -15,12 +15,52 @@ class TaskRepository {
     }
 
     async delete(id){
-        try {
-            await knex("tasks").where({ id }).del()
-        } catch (error) {
-            console.error("Erro ao excluir pedido", error)
-            throw error
+        await knex("tasks").where({ id }).del()
+    }
+
+    async index(id){
+        const tasks = await knex("tasks").where({ user_id: id }).select()
+        if(tasks.length === 0){
+            return null
         }
+        return tasks
+    }
+
+    async indexAdmin(){
+        const tasks = await knex("tasks").select()
+        if(tasks.length === 0){
+            return null
+        }
+        return tasks
+    }
+
+
+    async show({ user_id, task_id, title, priority, completed }){
+        const tasks = await knex("tasks")
+            .where(builder => {
+                if(user_id) builder.where({ user_id })
+                if (task_id) builder.whereLike({ id: task_id });
+                if (title) builder.whereLike("title", `%${title}%`);
+                if (priority) builder.whereLike("priority", `%${priority}%`);
+                if (completed) builder.whereLike("completed", `%${completed}%`);
+            })
+            .orderBy("user_id")
+            .select();
+
+        if(tasks.length === 0){
+            return null
+        }
+
+        return tasks;
+    }
+
+    async update({ task }){
+        const taskUpdate = await knex("tasks").where({ id: task.id }).update({
+            title: task.title,
+            priority: task.priority,
+            completed: task.completed
+        })
+        return taskUpdate
     }
 }
 
