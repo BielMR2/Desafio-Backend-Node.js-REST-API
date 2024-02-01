@@ -39,7 +39,7 @@ Host: localhost:3333
 Content-Length: 56
 
 {
-	"email": "teste12345@email.com",
+	"email": "teste@email.com",
 	"password": "123"
 }
 ````
@@ -56,7 +56,7 @@ Content-Length: 172
 
 {
 	"name": "teste",
-	"email": "teste12345@email.com",
+	"email": "teste@email.com",
 	"password": "123",
 	"confirmPassword": "123",
 	"role": "Administrador",
