@@ -19,19 +19,21 @@ class TaskRepository {
     }
 
     async index(id){
-        const tasks = await knex("tasks").where({ user_id: id }).select()
-        if(tasks.length === 0){
-            return null
+        try {
+            const tasks = await knex("tasks")
+            .where(builder => {
+                if(id) builder.where({ user_id: id })
+            })
+            .orderBy("priority", "desc")
+            .select()
+    
+            if(tasks.length === 0){
+                return null
+            }
+            return tasks
+        } catch (error) {
+            console.log(error)
         }
-        return tasks
-    }
-
-    async indexAdmin(){
-        const tasks = await knex("tasks").select()
-        if(tasks.length === 0){
-            return null
-        }
-        return tasks
     }
 
 

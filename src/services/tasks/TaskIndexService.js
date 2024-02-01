@@ -9,7 +9,7 @@ class TaskIndexService {
         let tasks
 
         if(user.role === "Administrador"){
-            tasks = await this.taskRepository.indexAdmin()
+            tasks = await this.taskRepository.index()
         } else {
             tasks = await this.taskRepository.index(id)
         }
