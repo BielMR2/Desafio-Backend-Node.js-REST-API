@@ -65,12 +65,13 @@ class UsersController {
 
     async delete(req, res){
         const { id } = req.params
+        const user_id = req.user.id
 
         const userRepository = new UserRepository()
         const userDeleteService = new UserDeleteService(userRepository)
 
         try {
-            const user = await userDeleteService.execute({ id })
+            const user = await userDeleteService.execute({ user_id, id })
             return res.status(200).json({ user })
         } catch (error) {
             return res.status(400).json({ error })

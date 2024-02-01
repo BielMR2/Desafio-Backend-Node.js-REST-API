@@ -11,6 +11,6 @@ usersRoutes.post("/", usersController.create)
 usersRoutes.get("/index", usersController.index)
 usersRoutes.get("/", usersController.show)
 usersRoutes.put("/", ensureAuthenticated, usersController.update)
-usersRoutes.delete("/:id", usersController.delete)
+usersRoutes.delete("/:id", ensureAuthenticated, usersController.delete)
 
 module.exports = usersRoutes
