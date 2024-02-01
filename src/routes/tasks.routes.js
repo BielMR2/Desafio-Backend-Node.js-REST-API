@@ -13,6 +13,7 @@ tasksRoutes.post("/", tasksController.create)
 tasksRoutes.get("/index", tasksController.index)
 tasksRoutes.get("/", tasksController.show)
 tasksRoutes.put("/:task_id", tasksController.update)
+tasksRoutes.patch("/:id/complete", tasksController.complete)
 tasksRoutes.delete("/:id", tasksController.delete)
 
 

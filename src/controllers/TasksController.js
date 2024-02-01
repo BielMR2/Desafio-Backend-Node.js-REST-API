@@ -6,6 +6,7 @@ const TaskDeleteService = require("../services/tasks/TaskDeleteService")
 const TaskIndexService = require("../services/tasks/TaskIndexService")
 const TaskShowService= require("../services/tasks/TaskShowService")
 const TaskUpdateService = require("../services/tasks/TaskUpdateService")
+const TaskCompleteService = require("../services/tasks/TaskCompleteService")
 
 class TasksController{
     async create(req, res){
@@ -70,6 +71,22 @@ class TasksController{
             return res.status(200).json({ message: "Pedido atualizado", taskUpdated })
         } catch (error) {
             return res.status(400).json({ message: "Erro ao atualizar um pedido", error })
+        }
+    }
+
+    async complete(req, res){
+        const user_id = req.user.id
+        const { id } = req.params
+
+        const taskRepository = new TaskRepository()
+        const userRepository = new UserRepository()
+        const taskCompleteService = new TaskCompleteService(userRepository, taskRepository)
+
+        try {
+            const taskComplete = await taskCompleteService.execute({ user_id, id })
+            return res.status(200).json({ message: "Pedido completado", taskComplete })
+        } catch (error) {
+            return res.status(400).json({ message: "Erro ao completar um pedido", error })
         }
     }
 

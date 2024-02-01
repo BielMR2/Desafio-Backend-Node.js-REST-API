@@ -7,6 +7,11 @@ class UserCreateService {
     }
 
     async execute({ name, email, password, confirmPassword, role }){
+        
+        if(!name || !email || !password || !confirmPassword || !role){
+            throw new AppError("Dados faltando!")
+        }
+
         if(role !== "Usuário" && role !== "Administrador"){
             throw new AppError("Cargo não autorizado.", 401);
         }

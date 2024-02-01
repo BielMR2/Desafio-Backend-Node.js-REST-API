@@ -6,7 +6,7 @@ class UserUpdateService {
         this.userRepository = userRepository
     }
 
-    async execute({ id, name, email, oldpassword, newPassword, confirmPassword, role }){
+    async execute({ id, name, email, oldPassword, newPassword, confirmPassword, role }){
         const user = await this.userRepository.find(id, "id") 
         if(!user){
             throw new AppError("Usuário não cadastrado!", 401)
@@ -22,12 +22,12 @@ class UserUpdateService {
             throw new AppError(`Cargo ou sintaxe errado do cargo! ("Administrador", "Usuário")`)
         }
 
-        if(!oldpassword || !newPassword || !confirmPassword){
+        if(!oldPassword || !newPassword || !confirmPassword){
             throw new AppError("Você precisa informar a senha antiga/nova para definir a nova senha!")
         }
 
-        if(oldpassword && newPassword){
-            const checkOldPassword = await compare(oldpassword, user.password)
+        if(oldPassword && newPassword){
+            const checkOldPassword = await compare(oldPassword, user.password)
 
             if(!checkOldPassword){
                 throw new AppError("A senha antiga não confere!")

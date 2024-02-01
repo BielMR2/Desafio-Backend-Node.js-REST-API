@@ -10,6 +10,11 @@ class UserCreateSessionService {
 
     async execute({ email, password, res }){
         const user = await this.userRepository.find(email, "email")
+        
+        if(!email || !password){
+            throw new AppError("Dados faltando!")
+        }
+
         if(!user){
             throw new AppError("Email e/ou senha incorreta", 401)
         }

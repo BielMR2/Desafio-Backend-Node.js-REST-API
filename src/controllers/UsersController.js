@@ -50,13 +50,13 @@ class UsersController {
 
     async update(req, res){
         const id = req.user.id
-        const { name, email, oldpassword, newPassword, confirmPassword, role } = req.body
+        const { name, email, oldPassword, newPassword, confirmPassword, role } = req.body
 
         const userRepository = new UserRepository()
         const userUpdateService = new UserUpdateService(userRepository)
 
         try {
-            const userUpdate = await userUpdateService.execute({ id, name, email, oldpassword, newPassword, confirmPassword, role })
+            const userUpdate = await userUpdateService.execute({ id, name, email, oldPassword, newPassword, confirmPassword, role })
             return res.status(200).json(userUpdate)
         } catch (error) {
             return res.status(400).json({ error })
